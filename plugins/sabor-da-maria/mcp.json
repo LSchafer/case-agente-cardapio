@@ -1,0 +1,10 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json",
+  "mcpServers": {
+    "sabor_da_maria": {
+      "type": "stdio",
+      "command": "./run-mcp.sh",
+      "args": []
+    }
+  }
+}

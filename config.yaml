@@ -1,0 +1,57 @@
+model:
+  provider: openai-api
+  base_url: https://api.openai.com/v1
+  default: gpt-5.6-luna
+
+# TPM baixo do Luna para contas Tier 1 (200K vs 500K do Terra) excede cota.
+# Mesmo provider (openai-api) do primario,
+# entao reusa a mesma OPENAI_API_KEY, sem credencial nova.
+fallback_providers:
+  - provider: openai-api
+    base_url: https://api.openai.com/v1
+    model: gpt-5.6-terra
+
+plugins:
+  enabled:
+    - sabor-da-maria
+
+# Toolsets desligados SO neste profile (nao afeta a instalacao
+# padrao/pessoal de quem instalar).
+# - terminal: fecha a lacuna de scraping manual quando web_search falha
+#   (achado de teste real).
+# - code_execution / computer_use: testado ao vivo que, com terminal
+#   desligado, o agente TENTA os dois como substituto (exec de
+#   subprocess via Python, depois automacao de GUI via computer_use) antes
+#   de desistir -- sao o mesmo tipo de lacuna do terminal, so descoberta
+#   depois.
+# - memory: torna estrutural a decisao ja registrada de que despensa/
+#   orcamento/perfil operacional nunca vivem na memoria nativa do Hermes.
+agent:
+  disabled_toolsets:
+    - terminal
+    - code_execution
+    - computer_use
+    - memory
+    - image_gen
+    - cronjob
+    - delegation
+
+web:
+  backend: tavily  # era ddgs (busca-only), trocado pra tavily com
+  # TAVILY_API_KEY propria (nao no repo, so no .env do profile instalado).
+
+# Self-improvement (background_review) desligado SO aqui, nunca no
+# ~/.hermes/config.yaml global do usuario (esse ja foi tentado antes e nao tinha efeito neste
+# profile -- profile e home isolada, nao herda config do profile pessoal).
+# Sem isso, o bg-review cria skills fantasma em skills/ (duplicando o que
+# ja esta neste SOUL.md) e disputa TPM com a conversa real a cada ~15
+# turnos -- achado de teste real, ja tinha causado estouro de rate limit.
+auxiliary:
+  background_review:
+    enabled: false
+
+# Sem isso, o profile isolado nao herda a preferencia pessoal do usuario
+# (show_reasoning:false no config.yaml default dele) -- o Hermes usa true
+# como default de fabrica, o que deixa o papo mais verboso/lento pra ler.
+display:
+  show_reasoning: false

@@ -1,0 +1,16 @@
+name: sabor-da-maria
+version: 0.1.0
+description: "Consultora de cardápio e precificação para a Dona Maria"
+hermes_requires: ">=0.20.0"
+env_requires:
+  - name: OPENAI_API_KEY
+    description: "Chave da API OpenAI — modelo padrão gpt-5.6-luna, com fallback automático pra gpt-5.6-terra (troque em config.yaml se quiser outro)"
+    required: true
+  - name: TAVILY_API_KEY
+    description: "Opcional: melhora a busca de receitas (sem ela, usa o modo gratuito sem chave da Tavily, mais lento sob uso intenso). Descomente a linha abaixo e cole sua chave para ativar"
+    required: false
+distribution_owned:
+  - .no-bundled-skills
+  - SOUL.md
+  - config.yaml
+  - plugins

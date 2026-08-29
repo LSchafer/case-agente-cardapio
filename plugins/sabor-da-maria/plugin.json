@@ -1,0 +1,7 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "sabor-da-maria",
+  "version": "0.1.0",
+  "description": "Servidor MCP determinístico (despensa, viabilidade, precificação) do agente Sabor da Maria.",
+  "license": "UNLICENSED"
+}
